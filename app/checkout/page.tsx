@@ -12,6 +12,10 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [finalTotal, setFinalTotal] = useState(0);
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiry, setExpiry] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [cardName, setCardName] = useState('');
   const [form, setForm] = useState({
     name: user?.name || '',
     email: '',
@@ -27,6 +31,10 @@ export default function Checkout() {
   const handleOrder = async () => {
     if (!form.name || !form.email || !form.phone || !form.address || !form.city) {
       alert('Please fill all fields!');
+      return;
+    }
+    if (form.paymentMethod === 'card' && (!cardNumber || !expiry || !cvv || !cardName)) {
+      alert('Please fill all card details!');
       return;
     }
     setLoading(true);
@@ -151,6 +159,40 @@ export default function Checkout() {
                     <p className="text-gray-400 text-sm">Visa, Mastercard accepted</p>
                   </div>
                 </label>
+                {form.paymentMethod === 'card' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border border-yellow-600/20 bg-black">
+                    <div className="md:col-span-2">
+                      <label className="text-gray-400 text-xs tracking-widest block mb-2">CARD NUMBER</label>
+                      <input type="text" value={cardNumber} maxLength={19} placeholder="1234 5678 9012 3456"
+                        onChange={(e) => {
+                          const v = e.target.value.replace(/\D/g, '').slice(0, 16);
+                          setCardNumber(v.replace(/(.{4})/g, '$1 ').trim());
+                        }}
+                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
+                    </div>
+                    <div>
+                      <label className="text-gray-400 text-xs tracking-widest block mb-2">EXPIRY DATE</label>
+                      <input type="text" value={expiry} maxLength={5} placeholder="MM/YY"
+                        onChange={(e) => {
+                          const v = e.target.value.replace(/\D/g, '').slice(0, 4);
+                          setExpiry(v.length >= 3 ? v.slice(0,2) + '/' + v.slice(2) : v);
+                        }}
+                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
+                    </div>
+                    <div>
+                      <label className="text-gray-400 text-xs tracking-widest block mb-2">CVV</label>
+                      <input type="password" value={cvv} maxLength={3} placeholder="•••"
+                        onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
+                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="text-gray-400 text-xs tracking-widest block mb-2">NAME ON CARD</label>
+                      <input type="text" value={cardName} placeholder="As printed on card"
+                        onChange={(e) => setCardName(e.target.value)}
+                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -218,4 +260,4 @@ export default function Checkout() {
       </footer>
     </main>
   );
-}
+}ccccc
