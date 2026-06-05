@@ -144,7 +144,7 @@ export default function Checkout() {
               <h2 className="text-lg font-bold mb-6 tracking-widest">
                 💳 PAYMENT <span className="text-yellow-500">METHOD</span>
               </h2>
-             <div className="space-y-3">
+              <div className="space-y-3">
                 <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'cod' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20 hover:border-yellow-600/40'}`}>
                   <input type="radio" value="cod" checked={form.paymentMethod === 'cod'} onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })} className="accent-yellow-500" />
                   <div>
@@ -152,11 +152,6 @@ export default function Checkout() {
                     <p className="text-gray-400 text-sm">Pay when your order arrives</p>
                   </div>
                 </label>
-                {form.paymentMethod === 'cod' && (
-                  <div className="p-4 border border-yellow-600/20 bg-black text-sm text-gray-400">
-                    💵 You will pay cash when your order is delivered to your door.
-                  </div>
-                )}
                 <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'card' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20 hover:border-yellow-600/40'}`}>
                   <input type="radio" value="card" checked={form.paymentMethod === 'card'} onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })} className="accent-yellow-500" />
                   <div>
