@@ -34,7 +34,7 @@ export default function Products() {
   const [addedId, setAddedId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch('/api/products')
       .then(res => res.json())
       .then(data => { setProducts(data); setLoading(false); })
       .catch(() => setLoading(false));

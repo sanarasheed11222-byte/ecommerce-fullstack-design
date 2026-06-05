@@ -36,7 +36,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (!params.id) return;
-    fetch(`http://localhost:5000/api/products/${params.id}`)
+    fetch(`/api/products/${params.id}`)
       .then(res => {
         if (!res.ok) { setNotFound(true); setLoading(false); return null; }
         return res.json();
@@ -45,7 +45,7 @@ export default function ProductDetail() {
         if (!data) return;
         setProduct(data);
         setLoading(false);
-        fetch('http://localhost:5000/api/products')
+        fetch('/api/products')
           .then(res => res.json())
           .then(all => {
             const rel = all.filter((p: Product) =>

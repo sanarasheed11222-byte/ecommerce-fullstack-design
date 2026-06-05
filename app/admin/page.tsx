@@ -36,7 +36,7 @@ export default function AdminPage() {
   }, [user, isAdmin]);
 
   const fetchProducts = async () => {
-    const res = await fetch('http://localhost:5000/api/products');
+    const res = await fetch('/api/products');
     const data = await res.json();
     setProducts(data);
   };
@@ -44,8 +44,8 @@ export default function AdminPage() {
   const handleSubmit = async () => {
     setLoading(true);
     const url = editId
-      ? `http://localhost:5000/api/products/${editId}`
-      : 'http://localhost:5000/api/products';
+      ? `/api/products/${editId}`
+      : '/api/products';
     const method = editId ? 'PUT' : 'POST';
 
     const res = await fetch(url, {
@@ -88,7 +88,7 @@ export default function AdminPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this product?')) return;
-    const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+    const res = await fetch(`/api/products/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
