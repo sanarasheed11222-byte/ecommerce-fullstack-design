@@ -31,7 +31,7 @@ export default function Login() {
         <div className="text-center mb-10">
           <Link href="/">
             <h1 className="text-4xl font-bold cursor-pointer">
-              <span className="text-yellow-500">LUXE</span>MART
+              <span className="text-yellow-500">LUXEMART</span>MART
             </h1>
           </Link>
           <p className="text-gray-400 mt-2">Sign in to your account</p>

@@ -171,7 +171,7 @@ export default function Products() {
       </div>
 
       <footer className="border-t border-yellow-600/30 py-10 px-6 text-center mt-10">
-        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXE</span>MART</p>
+        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXEMART</span>MART</p>
         <p className="text-gray-500 text-sm">© 2026 LuxeMart. All rights reserved.</p>
       </footer>
     </main>

@@ -94,7 +94,7 @@ export default function Home() {
         <div className="relative z-10 h-full flex items-center px-6 md:px-20">
           <div className="max-w-2xl">
             <p className="text-yellow-500 tracking-[0.5em] text-xs mb-4">
-              WELCOME TO LUXEMART
+              WELCOME TO LUXEMARTMART
             </p>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               {heroSlides[currentSlide].title}
@@ -284,7 +284,7 @@ export default function Home() {
       <footer className="border-t border-yellow-600/30 py-16 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
           <div>
-            <h3 className="text-2xl font-bold mb-4"><span className="text-yellow-500">LUXE</span>MART</h3>
+            <h3 className="text-2xl font-bold mb-4"><span className="text-yellow-500">LUXEMART</span>MART</h3>
             <p className="text-gray-500 text-sm leading-relaxed">Premium luxury shopping for those who demand the best.</p>
           </div>
           <div>

@@ -14,7 +14,7 @@ const categoryFallbacks: Record<string, string> = {
 };
 
 const PROMO_CODES: Record<string, number> = {
-  LUXE10: 10,
+  LUXEMART10: 10,
   SAVE20: 20,
   VIP30:  30,
 };
@@ -51,7 +51,7 @@ export default function CartPage() {
       setPromoApplied(code);
       setPromoError('');
     } else {
-      setPromoError('Invalid promo code. Try LUXE10, SAVE20 or VIP30.');
+      setPromoError('Invalid promo code. Try LUXEMART10, SAVE20 or VIP30.');
       setDiscount(0);
       setPromoApplied('');
     }
@@ -228,7 +228,7 @@ export default function CartPage() {
                 </div>
               )}
               {promoError && <p className="text-red-400 text-xs mt-2">{promoError}</p>}
-              {!promoApplied && <p className="text-gray-600 text-xs mt-2">Try: LUXE10 · SAVE20 · VIP30</p>}
+              {!promoApplied && <p className="text-gray-600 text-xs mt-2">Try: LUXEMART10 · SAVE20 · VIP30</p>}
             </div>
 
             <div className="border border-yellow-600/30 bg-gray-900 p-5 space-y-3">
@@ -275,7 +275,7 @@ export default function CartPage() {
       </div>
 
       <footer className="border-t border-yellow-600/30 py-10 px-6 text-center mt-10">
-        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXE</span>MART</p>
+        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXEMART</span>MART</p>
         <p className="text-gray-500 text-sm">© 2026 LuxeMart. All rights reserved.</p>
       </footer>
     </main>
