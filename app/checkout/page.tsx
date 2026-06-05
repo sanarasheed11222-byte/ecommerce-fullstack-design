@@ -11,6 +11,7 @@ export default function Checkout() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [finalTotal, setFinalTotal] = useState(0);
   const [form, setForm] = useState({
     name: user?.name || '',
     email: '',
@@ -30,6 +31,7 @@ export default function Checkout() {
     }
     setLoading(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
+    setFinalTotal(grandTotal);
     setOrderPlaced(true);
     clearCart();
     setLoading(false);
@@ -58,7 +60,7 @@ export default function Checkout() {
             </div>
             <div className="flex justify-between font-bold text-yellow-500 border-t border-yellow-600/20 pt-2 mt-2">
               <span>Total</span>
-              <span>Rs. {grandTotal.toLocaleString()}</span>
+              <span>Rs. {finalTotal.toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -211,7 +213,7 @@ export default function Checkout() {
       </div>
 
       <footer className="border-t border-yellow-600/30 py-10 px-6 text-center mt-10">
-        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXEMART</span>MART</p>
+        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXEMART</span></p>
         <p className="text-gray-500 text-sm">© 2026 LuxeMart. All rights reserved.</p>
       </footer>
     </main>
