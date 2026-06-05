@@ -31,7 +31,7 @@ export default function Navbar() {
 
         <Link href="/" onClick={() => setMenuOpen(false)}>
           <span className="text-2xl font-bold tracking-widest cursor-pointer">
-            <span className="text-yellow-500">LUXE</span>MART
+            <span className="text-yellow-500">LUXEMART</span>MART
           </span>
         </Link>
 
