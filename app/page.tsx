@@ -94,7 +94,7 @@ export default function Home() {
         <div className="relative z-10 h-full flex items-center px-6 md:px-20">
           <div className="max-w-2xl">
             <p className="text-yellow-500 tracking-[0.5em] text-xs mb-4">
-              WELCOME TO LUXEMARTMART
+              WELCOME TO LUXEMART
             </p>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               {heroSlides[currentSlide].title}
