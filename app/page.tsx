@@ -52,7 +52,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch('/api/products')
+   
+
+fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products')
+
       .then(res => res.json())
       .then(data => setProducts(data.slice(0, 8)));
   }, []);

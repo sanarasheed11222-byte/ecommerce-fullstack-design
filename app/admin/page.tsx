@@ -36,7 +36,10 @@ export default function AdminPage() {
   }, [user, isAdmin]);
 
   const fetchProducts = async () => {
-    const res = await fetch('/api/products');
+    const res = await
+
+fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products')
+;
     const data = await res.json();
     setProducts(data);
   };
@@ -88,7 +91,8 @@ export default function AdminPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this product?')) return;
-    const res = await fetch(`/api/products/${id}`, {
+    const res = awaitfetch(`https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products/${id}`, {
+
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

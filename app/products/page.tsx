@@ -34,7 +34,7 @@ export default function Products() {
   const [addedId, setAddedId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products')
       .then(res => res.json())
       .then(data => { setProducts(data); setLoading(false); })
       .catch(() => setLoading(false));
