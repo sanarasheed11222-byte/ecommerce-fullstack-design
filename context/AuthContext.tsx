@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (name: string, email: string, password: string) => {
     try {
-      const res = awaitfetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/auth/signup'
+      const res = await fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/auth/signup'
 , {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
