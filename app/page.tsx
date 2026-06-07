@@ -320,7 +320,7 @@ fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products
           </div>
         </div>
         <div className="border-t border-yellow-600/20 pt-8 text-center">
-          <p className="text-gray-600 text-sm">© 2026 LuxeMart. All rights reserved.</p>
+          <p className="text-gray-600 text-sm">© 2026 LuxeMart. All rights reserved. ⭐</p>
         </div>
       </footer>
 
