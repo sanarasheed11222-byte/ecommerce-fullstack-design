@@ -37,7 +37,7 @@ export default function ProductDetail() {
   useEffect(() => {
     if (!params.id) return;
     
-fetch(`https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products/${params.id}`)
+fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${params.id}`)
 
       .then(res => {
         if (!res.ok) { setNotFound(true); setLoading(false); return null; }
@@ -49,7 +49,7 @@ fetch(`https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products
         setLoading(false);
        
 
-fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products')
+fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/products`)
 
           .then(res => res.json())
           .then(all => {

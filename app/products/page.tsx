@@ -1,59 +1,46 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 
-const allProducts = [
-  { _id: '1',  name: 'Premium Watch',      price: 15000,  category: 'Accessories', image: 'https://picsum.photos/seed/watch/400/300' },
-  { _id: '2',  name: 'Wireless Headphones',price: 8500,   category: 'Electronics', image: 'https://picsum.photos/seed/headphones/400/300' },
-  { _id: '3',  name: 'Designer Handbag',   price: 12000,  category: 'Fashion',     image: 'https://picsum.photos/seed/handbag/400/300' },
-  { _id: '4',  name: 'Sunglasses',         price: 4500,   category: 'Accessories', image: 'https://picsum.photos/seed/sunglasses/400/300' },
-  { _id: '5',  name: 'Smartphone',         price: 45000,  category: 'Electronics', image: 'https://picsum.photos/seed/smartphone/400/300' },
-  { _id: '6',  name: 'Running Shoes',      price: 6500,   category: 'Fashion',     image: 'https://picsum.photos/seed/shoes/400/300' },
-  { _id: '7',  name: 'Coffee Maker',       price: 9500,   category: 'Kitchen',     image: 'https://picsum.photos/seed/coffee/400/300' },
-  { _id: '8',  name: 'Yoga Mat',           price: 3500,   category: 'Sports',      image: 'https://picsum.photos/seed/yoga/400/300' },
-  { _id: '9',  name: 'Perfume',            price: 7500,   category: 'Beauty',      image: 'https://picsum.photos/seed/perfume/400/300' },
-  { _id: '10', name: 'Laptop',             price: 85000,  category: 'Electronics', image: 'https://picsum.photos/seed/laptop/400/300' },
-  { _id: '11', name: 'Leather Wallet',     price: 2500,   category: 'Accessories', image: 'https://picsum.photos/seed/wallet/400/300' },
-  { _id: '12', name: 'Face Cream',         price: 1800,   category: 'Beauty',      image: 'https://picsum.photos/seed/facecream/400/300' },
-  { _id: '13', name: 'Smart TV 4K',        price: 95000,  category: 'Electronics', image: 'https://picsum.photos/seed/smarttv/400/300' },
-  { _id: '14', name: 'Winter Jacket',      price: 8900,   category: 'Fashion',     image: 'https://picsum.photos/seed/jacket/400/300' },
-  { _id: '15', name: 'Gold Bracelet',      price: 18000,  category: 'Accessories', image: 'https://picsum.photos/seed/bracelet/400/300' },
-  { _id: '16', name: 'Air Fryer',          price: 12500,  category: 'Kitchen',     image: 'https://picsum.photos/seed/airfryer/400/300' },
-  { _id: '17', name: 'Dumbbells Set',      price: 5500,   category: 'Sports',      image: 'https://picsum.photos/seed/dumbbells/400/300' },
-  { _id: '18', name: 'Lipstick Set',       price: 2200,   category: 'Beauty',      image: 'https://picsum.photos/seed/lipstick/400/300' },
-  { _id: '19', name: 'Bluetooth Speaker',  price: 6800,   category: 'Electronics', image: 'https://picsum.photos/seed/speaker/400/300' },
-  { _id: '20', name: 'Formal Shoes',       price: 7200,   category: 'Fashion',     image: 'https://picsum.photos/seed/formalshoes/400/300' },
-  { _id: '21', name: 'Gaming Mouse',       price: 4200,   category: 'Electronics', image: 'https://picsum.photos/seed/mouse/400/300' },
-  { _id: '22', name: 'Blender',            price: 4800,   category: 'Kitchen',     image: 'https://picsum.photos/seed/blender/400/300' },
-  { _id: '23', name: 'Football',           price: 3800,   category: 'Sports',      image: 'https://picsum.photos/seed/football/400/300' },
-  { _id: '24', name: 'Moisturizer',        price: 1500,   category: 'Beauty',      image: 'https://picsum.photos/seed/moisturizer/400/300' },
-  { _id: '25', name: 'iPad',               price: 120000, category: 'Electronics', image: 'https://picsum.photos/seed/ipad/400/300' },
-  { _id: '26', name: 'Summer Dress',       price: 5500,   category: 'Fashion',     image: 'https://picsum.photos/seed/dress/400/300' },
-  { _id: '27', name: 'Necklace',           price: 9500,   category: 'Accessories', image: 'https://picsum.photos/seed/necklace/400/300' },
-  { _id: '28', name: 'Non-stick Pan',      price: 3200,   category: 'Kitchen',     image: 'https://picsum.photos/seed/pan/400/300' },
-  { _id: '29', name: 'Tennis Racket',      price: 4500,   category: 'Sports',      image: 'https://picsum.photos/seed/tennis/400/300' },
-  { _id: '30', name: 'Shampoo Set',        price: 1200,   category: 'Beauty',      image: 'https://picsum.photos/seed/shampoo/400/300' },
-  { _id: '31', name: 'Smart Watch',        price: 25000,  category: 'Electronics', image: 'https://picsum.photos/seed/smartwatch/400/300' },
-  { _id: '32', name: 'Leather Belt',       price: 1800,   category: 'Accessories', image: 'https://picsum.photos/seed/belt/400/300' },
-  { _id: '33', name: 'Keyboard',           price: 8500,   category: 'Electronics', image: 'https://picsum.photos/seed/keyboard/400/300' },
-  { _id: '34', name: 'Jeans',              price: 4500,   category: 'Fashion',     image: 'https://picsum.photos/seed/jeans/400/300' },
-  { _id: '35', name: 'Ring',               price: 6500,   category: 'Accessories', image: 'https://picsum.photos/seed/ring/400/300' },
-  { _id: '36', name: 'Microwave',          price: 18000,  category: 'Kitchen',     image: 'https://picsum.photos/seed/microwave/400/300' },
-  { _id: '37', name: 'Cycling Helmet',     price: 3500,   category: 'Sports',      image: 'https://picsum.photos/seed/helmet/400/300' },
-  { _id: '38', name: 'Eye Shadow Kit',     price: 2800,   category: 'Beauty',      image: 'https://picsum.photos/seed/eyeshadow/400/300' },
-  { _id: '39', name: 'Earbuds',            price: 5500,   category: 'Electronics', image: 'https://picsum.photos/seed/earbuds/400/300' },
-  { _id: '40', name: 'Sneakers',           price: 8900,   category: 'Fashion',     image: 'https://picsum.photos/seed/sneakers/400/300' },
-];
+const categoryFallbacks: Record<string, string> = {
+  Electronics: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&auto=format&fit=crop&q=80',
+  Fashion:     'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&auto=format&fit=crop&q=80',
+  Accessories: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=400&auto=format&fit=crop&q=80',
+  Kitchen:     'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&auto=format&fit=crop&q=80',
+  Sports:      'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&auto=format&fit=crop&q=80',
+  Beauty:      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&auto=format&fit=crop&q=80',
+};
 
 const categories = ['All', 'Electronics', 'Fashion', 'Accessories', 'Kitchen', 'Sports', 'Beauty'];
 
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  description: string;
+  stock: number;
+}
+
 export default function Products() {
+  const { addToCart, cartCount } = useCart();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('default');
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  let filtered = allProducts.filter((p) => {
+  useEffect(() => {
+    fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/products`)
+      .then(res => res.json())
+      .then(data => { setProducts(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  let filtered = products.filter((p) => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
     const matchCategory = selectedCategory === 'All' || p.category === selectedCategory;
     return matchSearch && matchCategory;
@@ -62,22 +49,38 @@ export default function Products() {
   if (sortBy === 'low') filtered = [...filtered].sort((a, b) => a.price - b.price);
   if (sortBy === 'high') filtered = [...filtered].sort((a, b) => b.price - a.price);
 
-  const handleAddToCart = (e: React.MouseEvent, id: string) => {
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
     e.preventDefault();
-    setAddedId(id);
+    addToCart(product);
+    setAddedId(product._id);
     setTimeout(() => setAddedId(null), 1500);
   };
 
+  if (loading) return (
+    <main className="bg-black text-white min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-yellow-500 tracking-widest">LOADING PRODUCTS...</p>
+      </div>
+    </main>
+  );
+
   return (
     <main className="bg-black text-white min-h-screen">
-
       <div className="border-b border-yellow-600/30 py-10 px-6 text-center">
         <p className="text-yellow-500 tracking-widest text-sm mb-2">EXPLORE</p>
         <h1 className="text-4xl font-bold">All <span className="text-yellow-500">Products</span></h1>
-        <p className="text-gray-400 mt-2">{allProducts.length} premium items available</p>
+        <p className="text-gray-400 mt-2">Discover our complete luxury collection</p>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="flex justify-end mb-4">
+          <Link href="/cart">
+            <button className="border border-yellow-600/30 text-yellow-500 px-4 py-2 hover:bg-yellow-500 hover:text-black transition text-sm font-bold">
+              🛒 CART ({cartCount})
+            </button>
+          </Link>
+        </div>
 
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <input
@@ -121,11 +124,16 @@ export default function Products() {
             {filtered.map((product) => (
               <Link href={`/products/${product._id}`} key={product._id}>
                 <div className="border border-yellow-600/30 hover:border-yellow-500 bg-gray-900 hover:bg-gray-800 transition group cursor-pointer">
-                  <div className="overflow-hidden h-56 bg-gray-800">
+                  <div className="overflow-hidden relative h-56 bg-gray-800">
                     <img
-                      src={product.image}
+                      src={`${product.image}&w=400&q=80`}
                       alt={product.name}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = categoryFallbacks[product.category] || '';
+                      }}
                     />
                   </div>
                   <div className="p-4">
@@ -134,14 +142,14 @@ export default function Products() {
                     <div className="flex justify-between items-center">
                       <p className="text-yellow-500 font-bold text-xl">Rs. {product.price.toLocaleString()}</p>
                       <button
-                        onClick={(e) => handleAddToCart(e, product._id)}
+                        onClick={(e) => handleAddToCart(e, product)}
                         className={`text-xs font-bold px-3 py-2 transition ${
                           addedId === product._id
                             ? 'bg-green-500 text-white'
                             : 'bg-yellow-500 text-black hover:bg-yellow-400'
                         }`}
                       >
-                        {addedId === product._id ? 'ADDED!' : 'ADD TO CART'}
+                        {addedId === product._id ? '✓ ADDED!' : 'ADD TO CART'}
                       </button>
                     </div>
                   </div>
@@ -166,7 +174,6 @@ export default function Products() {
         <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXE</span>MART</p>
         <p className="text-gray-500 text-sm">© 2026 LuxeMart. All rights reserved.</p>
       </footer>
-
     </main>
   );
 }

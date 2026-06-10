@@ -47,15 +47,14 @@ export default function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
+    }, 2500);
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
    
 
-fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products')
-
+fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/products`)
       .then(res => res.json())
       .then(data => setProducts(data.slice(0, 8)));
   }, []);
@@ -127,20 +126,6 @@ fetch('https://ecommerce-fullstack-design-5atl.vercel.app/_/backend/api/products
             />
           ))}
         </div>
-
-        {/* Slide arrows */}
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-          className="absolute left-6 top-1/2 transform -translate-y-1/2 z-10 border border-white/20 text-white w-12 h-12 flex items-center justify-center hover:border-yellow-500 hover:text-yellow-500 transition"
-        >
-          ←
-        </button>
-        <button
-          onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-          className="absolute right-6 top-1/2 transform -translate-y-1/2 z-10 border border-white/20 text-white w-12 h-12 flex items-center justify-center hover:border-yellow-500 hover:text-yellow-500 transition"
-        >
-          →
-        </button>
 
       </section>
 

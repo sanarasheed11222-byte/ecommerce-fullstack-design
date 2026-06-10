@@ -11,11 +11,7 @@ export default function Checkout() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [finalTotal, setFinalTotal] = useState(0);
-  const [cardNumber, setCardNumber] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [cvv, setCvv] = useState('');
-  const [cardName, setCardName] = useState('');
+  const [formError, setFormError] = useState('');
   const [form, setForm] = useState({
     name: user?.name || '',
     email: '',
@@ -30,16 +26,12 @@ export default function Checkout() {
 
   const handleOrder = async () => {
     if (!form.name || !form.email || !form.phone || !form.address || !form.city) {
-      alert('Please fill all fields!');
+      setFormError('Please fill all required fields!');
       return;
     }
-    if (form.paymentMethod === 'card' && (!cardNumber || !expiry || !cvv || !cardName)) {
-      alert('Please fill all card details!');
-      return;
-    }
+    setFormError('');
     setLoading(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
-    setFinalTotal(grandTotal);
     setOrderPlaced(true);
     clearCart();
     setLoading(false);
@@ -68,7 +60,7 @@ export default function Checkout() {
             </div>
             <div className="flex justify-between font-bold text-yellow-500 border-t border-yellow-600/20 pt-2 mt-2">
               <span>Total</span>
-              <span>Rs. {finalTotal.toLocaleString()}</span>
+              <span>Rs. {grandTotal.toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -145,54 +137,20 @@ export default function Checkout() {
                 💳 PAYMENT <span className="text-yellow-500">METHOD</span>
               </h2>
               <div className="space-y-3">
-                <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'cod' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20 hover:border-yellow-600/40'}`}>
+                <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'cod' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20'}`}>
                   <input type="radio" value="cod" checked={form.paymentMethod === 'cod'} onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })} className="accent-yellow-500" />
                   <div>
                     <p className="font-bold">Cash on Delivery</p>
                     <p className="text-gray-400 text-sm">Pay when your order arrives</p>
                   </div>
                 </label>
-                <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'card' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20 hover:border-yellow-600/40'}`}>
+                <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'card' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20'}`}>
                   <input type="radio" value="card" checked={form.paymentMethod === 'card'} onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })} className="accent-yellow-500" />
                   <div>
                     <p className="font-bold">Credit / Debit Card</p>
                     <p className="text-gray-400 text-sm">Visa, Mastercard accepted</p>
                   </div>
                 </label>
-                {form.paymentMethod === 'card' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border border-yellow-600/20 bg-black">
-                    <div className="md:col-span-2">
-                      <label className="text-gray-400 text-xs tracking-widest block mb-2">CARD NUMBER</label>
-                      <input type="text" value={cardNumber} maxLength={19} placeholder="1234 5678 9012 3456"
-                        onChange={(e) => {
-                          const v = e.target.value.replace(/\D/g, '').slice(0, 16);
-                          setCardNumber(v.replace(/(.{4})/g, '$1 ').trim());
-                        }}
-                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
-                    </div>
-                    <div>
-                      <label className="text-gray-400 text-xs tracking-widest block mb-2">EXPIRY DATE</label>
-                      <input type="text" value={expiry} maxLength={5} placeholder="MM/YY"
-                        onChange={(e) => {
-                          const v = e.target.value.replace(/\D/g, '').slice(0, 4);
-                          setExpiry(v.length >= 3 ? v.slice(0,2) + '/' + v.slice(2) : v);
-                        }}
-                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
-                    </div>
-                    <div>
-                      <label className="text-gray-400 text-xs tracking-widest block mb-2">CVV</label>
-                      <input type="password" value={cvv} maxLength={3} placeholder="•••"
-                        onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
-                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="text-gray-400 text-xs tracking-widest block mb-2">NAME ON CARD</label>
-                      <input type="text" value={cardName} placeholder="As printed on card"
-                        onChange={(e) => setCardName(e.target.value)}
-                        className="w-full bg-black border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500 placeholder-gray-600" />
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -231,6 +189,12 @@ export default function Checkout() {
               </div>
             </div>
 
+            {formError && (
+              <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 text-sm font-bold">
+                ⚠ {formError}
+              </div>
+            )}
+
             <button onClick={handleOrder} disabled={loading}
               className="w-full bg-yellow-500 text-black font-bold py-4 hover:bg-yellow-400 transition tracking-widest text-sm disabled:opacity-50">
               {loading ? 'PLACING ORDER...' : 'PLACE ORDER →'}
@@ -255,7 +219,7 @@ export default function Checkout() {
       </div>
 
       <footer className="border-t border-yellow-600/30 py-10 px-6 text-center mt-10">
-        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXEMART</span></p>
+        <p className="text-2xl font-bold mb-2"><span className="text-yellow-500">LUXE</span>MART</p>
         <p className="text-gray-500 text-sm">© 2026 LuxeMart. All rights reserved.</p>
       </footer>
     </main>
