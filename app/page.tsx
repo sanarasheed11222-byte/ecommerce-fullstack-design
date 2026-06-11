@@ -54,7 +54,7 @@ export default function Home() {
   useEffect(() => {
    
 
-fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/products`)
+fetch("/api/products")
       .then(res => res.json())
       .then(data => setProducts(data.slice(0, 8)));
   }, []);
