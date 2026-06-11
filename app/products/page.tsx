@@ -126,7 +126,7 @@ export default function Products() {
                 <div className="border border-yellow-600/30 hover:border-yellow-500 bg-gray-900 hover:bg-gray-800 transition group cursor-pointer">
                   <div className="overflow-hidden relative h-56 bg-gray-800">
                     <img
-                      src={`${product.image}&w=400&q=80`}
+                      src={product.image}
                       alt={product.name}
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
