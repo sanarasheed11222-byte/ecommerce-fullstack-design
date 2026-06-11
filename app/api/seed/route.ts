@@ -57,7 +57,7 @@ export async function GET() {
     await connectDB();
     await Product.deleteMany({});
     await Product.insertMany(products);
-    return NextResponse.json({ message: 'Database seeded with 20 products!' });
+    return NextResponse.json({ message: `Database seeded with ${products.length} products!` });
   } catch (error) {
     return NextResponse.json({ error: 'Seed failed' }, { status: 500 });
   }
