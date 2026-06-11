@@ -52,6 +52,7 @@ const products = [
   { name: 'Sneakers', price: 8900, category: 'Fashion', stock: 18, description: 'Trendy memory foam sneakers.', image: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?w=400' },
 ];
 
+// updated
 export async function GET() {
   try {
     await connectDB();
