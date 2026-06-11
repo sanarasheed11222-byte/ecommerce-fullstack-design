@@ -186,7 +186,7 @@ fetch("/api/products")
                 <div className="border border-yellow-600/20 hover:border-yellow-500 bg-black hover:bg-gray-900 transition group cursor-pointer">
                   <div className="overflow-hidden h-56 bg-gray-800 relative">
                     <img
-                      src={`${product.image}&w=400&q=80`}
+                      src={product.image}
                       alt={product.name}
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
