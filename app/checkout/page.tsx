@@ -21,8 +21,9 @@ export default function Checkout() {
     paymentMethod: 'cod',
   });
 
-  const shipping = cartTotal > 5000 ? 0 : 299;
-  const grandTotal = cartTotal + shipping;
+  const [savedTotal] = useState(cartTotal);
+  const shipping = savedTotal > 5000 ? 0 : 299;
+  const grandTotal = savedTotal + shipping;
 
   const handleOrder = async () => {
     if (!form.name || !form.email || !form.phone || !form.address || !form.city) {
