@@ -26,10 +26,10 @@ function getEstimatedDate() {
 }
 
 const recommended = [
-  { _id: 'r1', name: 'Silver Ring',      price: 4200,  category: 'Accessories', image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&auto=format&fit=crop&q=80' },
-  { _id: 'r2', name: 'Wireless Earbuds', price: 7800,  category: 'Electronics', image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&auto=format&fit=crop&q=80' },
-  { _id: 'r3', name: 'Silk Scarf',       price: 3500,  category: 'Fashion',     image: 'https://images.unsplash.com/photo-1601924638867-3a6de6b7a500?w=400&auto=format&fit=crop&q=80' },
-  { _id: 'r4', name: 'Aroma Diffuser',   price: 2900,  category: 'Beauty',      image: 'https://images.unsplash.com/photo-1608181831718-c9e5e8b7a9e8?w=400&auto=format&fit=crop&q=80' },
+  { _id: 'r1', name: 'Silver Ring',      price: 4200,  category: 'Accessories', image: 'https://images.pexels.com/photos/1458867/pexels-photo-1458867.jpeg?auto=compresshttps://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&auto=format&fit=crop&q=80cs=tinysrgbhttps://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&auto=format&fit=crop&q=80w=400' },
+  { _id: 'r2', name: 'Wireless Earbuds', price: 7800,  category: 'Electronics', image: 'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compresshttps://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&auto=format&fit=crop&q=80cs=tinysrgbhttps://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&auto=format&fit=crop&q=80w=400' },
+  { _id: 'r3', name: 'Silk Scarf',       price: 3500,  category: 'Fashion',     image: 'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compresshttps://images.unsplash.com/photo-1601924638867-3a6de6b7a500?w=400&auto=format&fit=crop&q=80cs=tinysrgbhttps://images.unsplash.com/photo-1601924638867-3a6de6b7a500?w=400&auto=format&fit=crop&q=80w=400' },
+  { _id: 'r4', name: 'Aroma Diffuser',   price: 2900,  category: 'Beauty',      image: 'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compresshttps://images.unsplash.com/photo-1608181831718-c9e5e8b7a9e8?w=400&auto=format&fit=crop&q=80cs=tinysrgbhttps://images.unsplash.com/photo-1608181831718-c9e5e8b7a9e8?w=400&auto=format&fit=crop&q=80w=400' },
 ];
 
 export default function CartPage() {
