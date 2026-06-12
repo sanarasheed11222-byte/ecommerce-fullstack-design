@@ -101,7 +101,7 @@ fetch(`/api/products`)
           <span>/</span>
           <Link href="/products" className="hover:text-yellow-500 transition">Products</Link>
           <span>/</span>
-          <span className="text-yellow-500">{product.name}</span>
+          <span className="text-yellow-500">{product?.name}</span>
         </div>
       </div>
 
@@ -111,12 +111,12 @@ fetch(`/api/products`)
           <div className="relative">
             <div className="border border-yellow-600/30 overflow-hidden bg-gray-900 h-96 lg:h-[500px]">
               <img
-                src={`${product.image}&w=800&q=80`}
-                alt={product.name}
+                src={`${product?.image}&w=800&q=80`}
+                alt={product?.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = categoryFallbacks[product.category] || '';
+                  e.currentTarget.src = categoryFallbacks[product?.category] || '';
                 }}
               />
             </div>
@@ -128,11 +128,11 @@ fetch(`/api/products`)
           <div className="flex flex-col justify-center gap-6">
             <div>
               <p className="text-yellow-500 tracking-widest text-xs mb-2">{product?.category?.toUpperCase()}</p>
-              <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-              <p className="text-yellow-500 font-bold text-4xl mb-4">Rs. {product.price.toLocaleString()}</p>
-              <p className="text-gray-400 leading-relaxed">{product.description}</p>
-              <p className={`text-sm mt-3 font-bold ${product.stock > 5 ? 'text-green-400' : 'text-red-400'}`}>
-                {product.stock > 5 ? `✓ In Stock (${product.stock} available)` : `⚠ Only ${product.stock} left!`}
+              <h1 className="text-4xl font-bold mb-4">{product?.name}</h1>
+              <p className="text-yellow-500 font-bold text-4xl mb-4">Rs. {product?.price?.toLocaleString()}</p>
+              <p className="text-gray-400 leading-relaxed">{product?.description}</p>
+              <p className={`text-sm mt-3 font-bold ${product?.stock > 5 ? 'text-green-400' : 'text-red-400'}`}>
+                {product?.stock > 5 ? `✓ In Stock (${product?.stock} available)` : `⚠ Only ${product?.stock} left!`}
               </p>
             </div>
 
