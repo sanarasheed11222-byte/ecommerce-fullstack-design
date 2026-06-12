@@ -121,13 +121,13 @@ fetch(`/api/products`)
               />
             </div>
             <div className="absolute top-4 left-4 bg-yellow-500 text-black text-xs font-bold px-3 py-1 tracking-widest">
-              {product.category.toUpperCase()}
+              {product?.category?.toUpperCase()}
             </div>
           </div>
 
           <div className="flex flex-col justify-center gap-6">
             <div>
-              <p className="text-yellow-500 tracking-widest text-xs mb-2">{product.category.toUpperCase()}</p>
+              <p className="text-yellow-500 tracking-widest text-xs mb-2">{product?.category?.toUpperCase()}</p>
               <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
               <p className="text-yellow-500 font-bold text-4xl mb-4">Rs. {product.price.toLocaleString()}</p>
               <p className="text-gray-400 leading-relaxed">{product.description}</p>
