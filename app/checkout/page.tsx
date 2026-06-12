@@ -152,6 +152,16 @@ export default function Checkout() {
                     <p className="text-gray-400 text-sm">Visa, Mastercard accepted</p>
                   </div>
                 </label>
+                {form.paymentMethod === 'card' && (
+  <div className="mt-4 space-y-4 border border-yellow-600/30 p-4 bg-gray-900">
+    <p className="text-yellow-500 text-xs tracking-widest font-bold">CARD DETAILS</p>
+    <input type="text" placeholder="Card Number (1234 5678 9012 3456)" className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
+    <div className="flex gap-4">
+      <input type="text" placeholder="MM/YY" className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
+      <input type="text" placeholder="CVV" className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
+    </div>
+  </div>
+)}
               </div>
             </div>
           </div>
