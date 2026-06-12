@@ -37,7 +37,7 @@ export default function ProductDetail() {
   useEffect(() => {
     if (!params.id) return;
     
-fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${params.id}`)
+fetch(`/api/products/${params.id}`)
 
       .then(res => {
         if (!res.ok) { setNotFound(true); setLoading(false); return null; }
@@ -49,7 +49,7 @@ fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${params.id}`)
         setLoading(false);
        
 
-fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/products`)
+fetch(`/api/products`)
 
           .then(res => res.json())
           .then(all => {
