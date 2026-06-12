@@ -12,15 +12,37 @@ const Product = mongoose.models.Product || mongoose.model('Product', ProductSche
 export async function GET() {
   try {
     await connectDB();
-
-    // Fetch real products with real images from DummyJSON
-    const res = await fetch('https://dummyjson.com/products?limit=35&skip=0');
+    const res = await fetch('https://dummyjson.com/products?limit=35');
     const data = await res.json();
+
+    const categoryMap: Record<string, string> = {
+      'smartphones': 'Electronics',
+      'laptops': 'Electronics',
+      'fragrances': 'Beauty',
+      'skincare': 'Beauty',
+      'groceries': 'Kitchen',
+      'home-decoration': 'Kitchen',
+      'furniture': 'Kitchen',
+      'tops': 'Fashion',
+      'womens-dresses': 'Fashion',
+      'womens-shoes': 'Fashion',
+      'mens-shirts': 'Fashion',
+      'mens-shoes': 'Fashion',
+      'mens-watches': 'Accessories',
+      'womens-watches': 'Accessories',
+      'womens-bags': 'Accessories',
+      'womens-jewellery': 'Accessories',
+      'sunglasses': 'Accessories',
+      'automotive': 'Accessories',
+      'motorcycle': 'Sports',
+      'lighting': 'Kitchen',
+      'sports-accessories': 'Sports',
+    };
 
     const products = data.products.map((p: any) => ({
       name: p.title,
-      price: Math.round(p.price * 280), // Convert to PKR
-      category: p.category.charAt(0).toUpperCase() + p.category.slice(1),
+      price: Math.round(p.price * 280),
+      category: categoryMap[p.category] || 'Electronics',
       image: p.thumbnail,
       description: p.description,
       stock: p.stock,
@@ -29,7 +51,7 @@ export async function GET() {
     await Product.deleteMany({});
     await Product.insertMany(products);
 
-    return NextResponse.json({ message: `Seeded ${products.length} products with real images!` });
+    return NextResponse.json({ message: `Seeded ${products.length} real products!` });
   } catch (error) {
     return NextResponse.json({ error: 'Seed failed' }, { status: 500 });
   }
