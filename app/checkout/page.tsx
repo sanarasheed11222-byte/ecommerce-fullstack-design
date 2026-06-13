@@ -1,12 +1,10 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 
 export default function Checkout() {
-  const router = useRouter();
   const { cartItems, cartTotal, clearCart } = useCart();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -19,6 +17,9 @@ export default function Checkout() {
     address: '',
     city: '',
     paymentMethod: 'cod',
+    cardNumber: '',
+    expiry: '',
+    cvv: '',
   });
 
   const [savedTotal] = useState(cartTotal);
@@ -28,6 +29,10 @@ export default function Checkout() {
   const handleOrder = async () => {
     if (!form.name || !form.email || !form.phone || !form.address || !form.city) {
       setFormError('Please fill all required fields!');
+      return;
+    }
+    if (form.paymentMethod === 'card' && (!form.cardNumber || !form.expiry || !form.cvv)) {
+      setFormError('Please fill all card details!');
       return;
     }
     setFormError('');
@@ -101,9 +106,7 @@ export default function Checkout() {
           {/* LEFT */}
           <div className="flex-1 space-y-6">
             <div className="border border-yellow-600/30 bg-gray-900 p-6">
-              <h2 className="text-lg font-bold mb-6 tracking-widest">
-                📦 DELIVERY <span className="text-yellow-500">INFORMATION</span>
-              </h2>
+              <h2 className="text-lg font-bold mb-6 tracking-widest">📦 DELIVERY <span className="text-yellow-500">INFORMATION</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-gray-400 text-xs tracking-widest block mb-2">FULL NAME</label>
@@ -134,9 +137,7 @@ export default function Checkout() {
             </div>
 
             <div className="border border-yellow-600/30 bg-gray-900 p-6">
-              <h2 className="text-lg font-bold mb-6 tracking-widest">
-                💳 PAYMENT <span className="text-yellow-500">METHOD</span>
-              </h2>
+              <h2 className="text-lg font-bold mb-6 tracking-widest">💳 PAYMENT <span className="text-yellow-500">METHOD</span></h2>
               <div className="space-y-3">
                 <label className={`flex items-center gap-4 p-4 border cursor-pointer transition ${form.paymentMethod === 'cod' ? 'border-yellow-500 bg-yellow-500/10' : 'border-yellow-600/20'}`}>
                   <input type="radio" value="cod" checked={form.paymentMethod === 'cod'} onChange={(e) => setForm({ ...form, paymentMethod: e.target.value })} className="accent-yellow-500" />
@@ -153,15 +154,27 @@ export default function Checkout() {
                   </div>
                 </label>
                 {form.paymentMethod === 'card' && (
-  <div className="mt-4 space-y-4 border border-yellow-600/30 p-4 bg-gray-900">
-    <p className="text-yellow-500 text-xs tracking-widest font-bold">CARD DETAILS</p>
-    <input type="text" placeholder="Card Number (1234 5678 9012 3456)" className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
-    <div className="flex gap-4">
-      <input type="text" placeholder="MM/YY" className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
-      <input type="text" placeholder="CVV" className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
-    </div>
-  </div>
-)}
+                  <div className="space-y-4 border border-yellow-600/30 p-4 bg-black">
+                    <p className="text-yellow-500 text-xs tracking-widest font-bold">CARD DETAILS</p>
+                    <div>
+                      <label className="text-gray-400 text-xs tracking-widest block mb-2">CARD NUMBER</label>
+                      <input type="text" value={form.cardNumber} onChange={(e) => setForm({ ...form, cardNumber: e.target.value })} placeholder="1234 5678 9012 3456"
+                        className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="flex-1">
+                        <label className="text-gray-400 text-xs tracking-widest block mb-2">EXPIRY</label>
+                        <input type="text" value={form.expiry} onChange={(e) => setForm({ ...form, expiry: e.target.value })} placeholder="MM/YY"
+                          className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
+                      </div>
+                      <div className="flex-1">
+                        <label className="text-gray-400 text-xs tracking-widest block mb-2">CVV</label>
+                        <input type="text" value={form.cvv} onChange={(e) => setForm({ ...form, cvv: e.target.value })} placeholder="123"
+                          className="w-full bg-gray-800 border border-yellow-600/30 text-white px-4 py-3 focus:outline-none focus:border-yellow-500" />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -173,7 +186,7 @@ export default function Checkout() {
               <div className="space-y-3 mb-4">
                 {cartItems.map((item) => (
                   <div key={item._id} className="flex gap-3 items-center">
-                    <img src={`${item.image}&w=80&q=80`} alt={item.name} className="w-12 h-12 object-cover border border-yellow-600/20" />
+                    <img src={item.image} alt={item.name} className="w-12 h-12 object-cover border border-yellow-600/20" />
                     <div className="flex-1">
                       <p className="text-sm font-bold truncate">{item.name}</p>
                       <p className="text-gray-500 text-xs">Qty: {item.quantity}</p>
@@ -185,7 +198,7 @@ export default function Checkout() {
               <div className="border-t border-yellow-600/20 pt-4 space-y-2">
                 <div className="flex justify-between text-sm text-gray-400">
                   <span>Subtotal</span>
-                  <span className="text-white">Rs. {cartTotal.toLocaleString()}</span>
+                  <span className="text-white">Rs. {savedTotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-400">
                   <span>Shipping</span>
